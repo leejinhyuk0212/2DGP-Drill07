@@ -51,16 +51,16 @@ class Zombie:
                              self.x, self.y)
 
 class Ball:
-    def __init__(self):
+    def __init__(self, big=False):
         self.x, self.y = random.randint(0, 800), 599
-        self.frame = 0
-        self.image = load_image('ball21x21.png')
+        self.image = load_image('ball41x41.png' if big else 'ball21x21.png')
+        self.w, self.h = self.image.w, self.image.h
 
     def update(self):
         pass
 
     def draw(self):
-        self.image.clip_draw(0, 0, 100, 100, self.x, self.y)
+        self.image.clip_draw(0, 0, self.w, self.h, self.x, self.y)
 
 def handle_events():
     global running
@@ -87,9 +87,11 @@ def reset_world():
     global zombie
     zombie = Zombie()
     world.append(zombie)
-    global ball
-    ball = [Ball() for _ in range(10)]
-    world += ball
+    global balls
+    small_balls = [Ball(big=False) for _ in range(10)]
+    big_balls = [Ball(big=True) for _ in range(10)]
+    balls = small_balls + big_balls
+    world += balls
 
 reset_world()
 
