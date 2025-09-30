@@ -59,9 +59,9 @@ class Ball:
 
     def update(self):
         self.y -= self.speed
-        if self.y < 50:
-            self.y = 50
-        pass
+        grass_top = 50
+        if self.y - self.h // 2 < grass_top:
+            self.y = grass_top + self.h // 2
 
     def draw(self):
         self.image.clip_draw(0, 0, self.w, self.h, self.x, self.y)
